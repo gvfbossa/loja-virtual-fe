@@ -1,0 +1,105 @@
+<h2>Checkout Loja Virtual</h2>
+
+<div *ngIf="cartItems.length <= 0" class="alert">
+  Nenhum produto selecionado. Por favor, volte e escolha um produto.
+</div>
+
+<form id="checkout-form" class="form" (ngSubmit)="submitForm($event)" #checkoutForm="ngForm" *ngIf="cartItems.length > 0">
+  <!-- Informações do Produto -->
+  <fieldset class="form__fieldset">
+    <legend class="form__legend">Itens no Carrinho</legend>
+
+    <div *ngFor="let item of cartItems">
+      <div class="form__group">
+        <label class="form__label">Produto:</label>
+        <input type="text" class="form__input" [value]="item.nome" readonly />
+      </div>
+      <div class="form__group">
+        <label class="form__label">Descrição:</label>
+        <input type="text" class="form__input" [value]="item.descricao" readonly />
+      </div>
+      <div class="form__group">
+        <label class="form__label">Preço:</label>
+        <input type="text" class="form__input" [value]="(item.preco * item.quantity).toFixed(2)" readonly />
+      </div>
+      <div class="form__group">
+        <label class="form__label">Quantidade:</label>
+        <input type="number" class="form__input" [value]="item.quantity" readonly />
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset class="form__fieldset">
+    <legend class="form__legend">Dados do Portador do Cartão</legend>
+
+    <div class="form__group">
+      <label for="identificationType" class="form__label">Tipo de Identificação:</label>
+      <select id="docType" class="form__select" required>
+        <option value="">Selecione</option>
+      </select>
+    </div>
+
+    <div class="form__group">
+      <label for="identificationNumber" class="form__label">Número de Identificação:</label>
+      <input type="text" id="identificationNumber" class="form__input" required />
+    </div>    
+    
+  </fieldset>
+
+  <fieldset class="form__fieldset">
+    <legend class="form__legend">Método de Pagamento</legend>
+    <div class="form__group">
+      <label for="paymentMethodSelect" class="form__label">Método de Pagamento:</label>
+      <select id="paymentMethodSelect" class="form__select" required>
+        <option value="">Selecione</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="issuerSelect" class="form__label">Banco Emissor</label>
+      <select id="issuerSelect" class="form__select">
+        <option value="">Selecione</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="installmentsSelect" class="form__label">Número de Parcelas</label>
+      <select id="installmentsSelect" class="form__select">
+        <option value="">Selecione</option>
+      </select>
+    </div>
+    
+  </fieldset>
+  
+
+  <fieldset class="form__fieldset">
+    <legend class="form__legend">Dados do Cartão</legend>
+  
+    <div class="form__group">
+      <label for="cardholderName" class="form__label">Nome Titular Cartão:</label>
+      <input type="text" class="form__input" id="cardholderName" />
+    </div>
+
+    <div class="form__group">
+      <label for="cardholderEmail" class="form__label">Email Titular Cartão:</label>
+      <input type="text" class="form__input" id="cardholderEmail" />
+    </div>
+
+    <div class="form__group">
+      <label for="cardNumber" class="form__label">Número do Cartão:</label>
+      <div class="form__input" id="cardNumber"></div>
+    </div>
+    
+    <div class="form__group">
+      <label for="expirationDate" class="form__label">Data de Vencimento:</label>
+      <div class="form__input" id="expirationDate"></div>
+    </div>
+    
+    <div class="form__group">
+      <label for="securityCode" class="form__label">Código de Segurança:</label>
+      <div class="form__input" id="securityCode"></div>
+    </div>
+  </fieldset>
+    
+  <button type="submit" class="form__button">Finalizar Compra</button>
+</form>

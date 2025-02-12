@@ -1,0 +1,8 @@
+<div class="produto-destaque">
+  <img [src]="produto.foto" [alt]="produto.nome" class="produto-destaque__imagem" />
+  <div class="produto-destaque__conteudo">
+    <h2 class="produto-destaque__titulo">{{ produto.nome }}</h2>
+    <p class="produto-destaque__descricao">{{ produto.descricao }}</p>
+    <p class="produto-destaque__preco">R$ {{ produto.preco | number:'1.2-2' }}</p>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<header class="header">
+    <div class="header__logo-container">
+        <div class="header__logo">
+            <img (click)="navigateTo('', false)" src="assets/images/logo-cocada.png" alt="Logo" class="header__logo-image">
+        </div>
+    </div>
+    
+    <nav class="header__categories">
+        <ul>
+          <li *ngFor="let category of categories" class="header__category">
+            <a (click)="navigateTo(category.route, false)" class="header__category-link">
+              {{ category.name }}
+            </a>
+            <ul *ngIf="category.subcategories" class="header__subcategory-list">
+              <li *ngFor="let sub of category.subcategories" class="header__subcategory-item">
+                <a (click)="navigateTo(sub.route, false)" class="header__subcategory-link">
+                  {{ sub.name }}
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+    </nav>
+    
+    <div class="header__date-and-search">
+        <div class="header__search-container">
+            <input
+                id="search-box"
+                class="header__search"
+                type="text"
+                placeholder="Buscar produtos..."
+                [(ngModel)]="searchQuery"
+                (input)="filterNoticias()"
+            />
+            <ul *ngIf="filteredNoticias.length > 0" class="header__dropdown">
+                <li *ngFor="let noticia of filteredNoticias" class="header__dropdown-item" (click)="navigateTo(null,null)">
+                {{ noticia.headline }}
+                </li>
+            </ul>
+            <mat-icon (click)="focusOnSearch()">search</mat-icon>
+            <mat-icon (click)="navigateToCart()">shopping_cart</mat-icon>
+            <span class="cart-badge" *ngIf="cartQuantity > 0">{{ cartQuantity }}</span>
+
+            <div class="header__social-icons">
+              <a href="https://www.instagram.com/cocadinhadobahia" target="_blank" class="fa-brands fa-instagram"></a>
+            </div>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,14 @@
+<div class="carousel">
+  <button class="carousel__btn carousel__btn--prev" (click)="prevSlide()">&#10094;</button>
+  <h2>Produtos em Destaque</h2>
+  <div class="carousel__container">
+    <app-thumbnail-destaque
+      *ngFor="let produto of produtos"
+      [produto]="produto"
+      class="carousel__item"
+      (click)="goToProduto(produto.id)">
+    </app-thumbnail-destaque>
+  </div>
+
+  <button class="carousel__btn carousel__btn--next" (click)="nextSlide()">&#10095;</button>
+</div>

@@ -1,0 +1,127 @@
+.product {
+  width: 100%;
+  display: flex; /* Alinha lado a lado */
+  align-items: flex-start; /* Alinha o topo da imagem e do texto */
+  justify-content: center; /* Centraliza horizontalmente */
+  gap: 20px; /* Espaço entre imagem e conteúdo */
+  padding: 20px;
+  box-sizing: border-box;
+  margin-bottom: 2rem;
+}
+
+.product-card__image {
+  width: 30%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.product-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Mantém o texto alinhado à esquerda */
+}
+
+.product-card__name {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #441612;
+}
+
+.product-card__description {
+  font-size: 1rem;
+  color: #872B24;
+  margin-bottom: 10px;
+}
+
+.product-card__price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #441612;
+  margin-bottom: 10px;
+}
+
+.product-card__actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.btn {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.btn--buy {
+  background: rgb(196, 50, 50);
+  color: white;
+  font-weight: bold;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .product {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .product-card__image {
+    width: 80%; /* Aumenta o tamanho da imagem em telas menores */
+  }
+
+  .product-content {
+    align-items: center;
+    text-align: center;
+  }
+
+  .product-card__actions {
+    justify-content: center;
+  }
+}
+
+
+.product-card__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.product-quantity {
+  width: 60px; /* Define um tamanho fixo para o input */
+  height: 35px;
+  text-align: center;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Remove as setas do input number no Chrome */
+.product-quantity::-webkit-outer-spin-button,
+.product-quantity::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.btn {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.btn--buy {
+  background: rgb(196, 50, 50);
+  color: white;
+  font-weight: bold;
+}
