@@ -10,7 +10,7 @@ export class FreteService {
   constructor(private http: HttpClient) { }
 
   calcularFrete(cepOrigem: string, cepDestino: string, cartItems: any[]): Observable<any> {
-    const url = '/melhorenvio-api/api/v2/me/shipment/calculate';
+    const url = 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate';
     const headers = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ export class FreteService {
     let peso = 0
     cartItems.forEach(item => {
       peso = peso + item.peso
-    });
+    }); 
     peso = peso/1000
 
     console.log('Peso Total dos produtos: ', peso)
