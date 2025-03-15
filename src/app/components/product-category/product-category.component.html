@@ -1,0 +1,17 @@
+<div class="product-list" *ngIf="filteredProducts.length > 0; else emptyMessage">
+  <div class="product-card" *ngFor="let product of filteredProducts">
+    <img [src]="product.foto" alt="{{ product.nome }}" class="product-card__image" />
+    <h3 class="product-card__name">{{ product.nome }}</h3>
+    <p class="product-card__description">{{ product.descricao }}</p>
+    <p class="product-card__price">R$ {{ product.preco | number:'1.2-2' }}</p>
+    <div class="product-card__actions">
+      <button class="btn btn--view" (click)="viewProduct(product)">Ver Item</button>
+      <button class="btn btn--buy" (click)="addToCart(product)">Comprar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Mensagem exibida quando não há produtos na categoria -->
+<ng-template #emptyMessage>
+<p class="empty-message">Nenhum produto encontrado nesta categoria.</p>
+</ng-template>

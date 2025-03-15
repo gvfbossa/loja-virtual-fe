@@ -6,7 +6,7 @@
   width: 800px;
   margin: 40px auto; /* Centraliza na tela */
   padding: 20px;
-  background-color: #F3E2B8;
+  background-color: rgb(217, 217, 217);
   border-radius: 12px;
   box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.2);
   overflow: hidden;
@@ -28,18 +28,18 @@
 .produto-destaque__titulo {
   font-size: 2rem;
   font-weight: bold;
-  color: #441612;
+  color: #012448;
   margin-bottom: 10px;
 }
 
 .produto-destaque__descricao {
   font-size: 1.2rem;
-  color: #872B24;
+  color: #003d7b;
   margin-bottom: 15px;
 }
 
 .produto-destaque__preco {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #441612;
+  color: #012448;
 }

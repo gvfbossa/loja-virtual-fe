@@ -3,10 +3,13 @@
   <div class="product-content">
     <h3 class="product-card__name">{{ product.nome }}</h3>
     <p class="product-card__description">{{ product.descricao }}</p>
-    <p class="product-card__price">R$ {{ product.preco | number:'1.2-2' }}</p>
+    <p class="product-card__price">R$ {{ product.preco.toString().replace('.', ',') }}</p>
     <div class="product-card__actions">
       <input type="number" min="1" [(ngModel)]="product.quantity" class="product-quantity" />
       <button class="btn btn--buy" (click)="addToCart(product)">Adicionar ao Carrinho</button>
     </div>
   </div>
 </div>
+<span *ngIf="loadProduto">
+  <app-spinner></app-spinner>
+</span>

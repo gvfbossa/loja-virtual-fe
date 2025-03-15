@@ -1,0 +1,11 @@
+{
+    "/melhorenvio-api": {
+      "target": "https://sandbox.melhorenvio.com.br",
+      "secure": false,
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/melhorenvio-api": ""
+      }
+    }
+  }
+  

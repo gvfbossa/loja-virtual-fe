@@ -29,5 +29,10 @@ export class CartService {
   getCartItems() {
     return this.cartItems;
   }
+
+  cleanCart() {
+    this.cartItems = [];
+    this.cartQuantitySubject.next(0);
+  }  
     
 }

@@ -1,105 +1,80 @@
-<h2>Checkout Loja Virtual</h2>
+<div class="checkout-container">
+  <h2>Carrinho</h2>
 
-<div *ngIf="cartItems.length <= 0" class="alert">
-  Nenhum produto selecionado. Por favor, volte e escolha um produto.
+  <!-- Carrinho Vazio -->
+  <div *ngIf="cartItems.length <= 0" class="alert">
+    Nenhum produto selecionado. Por favor, volte e escolha um produto.
+  </div>
+
+  <!-- Formulário Único -->
+  <form id="checkout-form" class="form" *ngIf="cartItems.length > 0">
+    <fieldset class="form__fieldset">
+      <legend class="form__legend">Resumo do Carrinho</legend>
+
+      <div *ngFor="let item of cartItems; let i = index" class="cart-item">
+        <div class="cart-item__info">
+          <h4 class="cart-item__name">{{ item.nome }}</h4>
+          <span class="cart-item__quantity">Quantidade:
+            <input type="number" [value]="item.quantity" min="0" (input)="updateQuantity($event, i)" class="cart-item__input" />
+          </span>
+        </div>
+        <div class="cart-item__price">
+          <span>R$ {{ (item.preco * item.quantity).toFixed(2).toString().replace('.', ',') }}</span>
+        </div>
+      </div>
+
+      <div class="cart-summary-frete">
+        <label for="cepOrigem" class="cart-item__cep">CEP:</label>
+        <input
+          class="cart-item__input cart-item__input-frete"
+          type="text" 
+          id="cepOrigem" 
+          [(ngModel)]="cepDestino" 
+          name="cepOrigem" 
+          placeholder="Digite o CEP" 
+          required
+        />
+        <button type="button" (click)="calcularFrete()" class="form__button form__button-frete" [disabled]="isLoadingFrete">
+          <span>Calcular Frete</span>
+          <span *ngIf="isLoadingFrete">
+            <app-spinner></app-spinner>
+          </span>
+        </button>
+      </div>
+      
+      <!-- Exibição do Frete Calculado -->
+      <div *ngIf="fretes.length > 0" class="cart-summary-frete">
+        <div *ngFor="let frete of fretes">
+          <p class="cart-summary-frete-description">
+            <img [src]="frete.companyPicture" alt="Logo da transportadora" class="cart-summary-frete-logo"/>
+            <strong>Valor: </strong>R${{ frete.price.toString().replace('.', ',') }} - {{ frete.name }}
+            <input 
+              type="radio" 
+              [value]="frete.price"
+              [(ngModel)]="freteSelecionado"
+              name="freteSelecionado"
+              (change)="updateValorFrete(frete.price)" />
+          </p>
+        </div>
+      </div>
+
+      <div class="cart-summary">
+        <p><strong>Total: </strong> R$ {{ totalPrice.toString().replace('.', ',') }}</p>
+      </div>
+    </fieldset>
+
+    <fieldset class="form__fieldset">
+      <legend class="form__legend">Escolha a Forma de Pagamento</legend>
+    
+      <div class="payment-select">
+        <select id="paymentMethod" [(ngModel)]="selectedPaymentMethod" name="paymentMethod">
+          <option *ngFor="let method of paymentMethods" [value]="method.id">
+            {{ method.name }}
+          </option>
+        </select>
+      </div>
+    </fieldset>      
+
+    <input type="button" class="form__button" (click)="finalizarCompra()" value="Finalizar Compra"/>
+  </form>
 </div>
-
-<form id="checkout-form" class="form" (ngSubmit)="submitForm($event)" #checkoutForm="ngForm" *ngIf="cartItems.length > 0">
-  <!-- Informações do Produto -->
-  <fieldset class="form__fieldset">
-    <legend class="form__legend">Itens no Carrinho</legend>
-
-    <div *ngFor="let item of cartItems">
-      <div class="form__group">
-        <label class="form__label">Produto:</label>
-        <input type="text" class="form__input" [value]="item.nome" readonly />
-      </div>
-      <div class="form__group">
-        <label class="form__label">Descrição:</label>
-        <input type="text" class="form__input" [value]="item.descricao" readonly />
-      </div>
-      <div class="form__group">
-        <label class="form__label">Preço:</label>
-        <input type="text" class="form__input" [value]="(item.preco * item.quantity).toFixed(2)" readonly />
-      </div>
-      <div class="form__group">
-        <label class="form__label">Quantidade:</label>
-        <input type="number" class="form__input" [value]="item.quantity" readonly />
-      </div>
-    </div>
-  </fieldset>
-
-  <fieldset class="form__fieldset">
-    <legend class="form__legend">Dados do Portador do Cartão</legend>
-
-    <div class="form__group">
-      <label for="identificationType" class="form__label">Tipo de Identificação:</label>
-      <select id="docType" class="form__select" required>
-        <option value="">Selecione</option>
-      </select>
-    </div>
-
-    <div class="form__group">
-      <label for="identificationNumber" class="form__label">Número de Identificação:</label>
-      <input type="text" id="identificationNumber" class="form__input" required />
-    </div>    
-    
-  </fieldset>
-
-  <fieldset class="form__fieldset">
-    <legend class="form__legend">Método de Pagamento</legend>
-    <div class="form__group">
-      <label for="paymentMethodSelect" class="form__label">Método de Pagamento:</label>
-      <select id="paymentMethodSelect" class="form__select" required>
-        <option value="">Selecione</option>
-      </select>
-    </div>
-
-    <div>
-      <label for="issuerSelect" class="form__label">Banco Emissor</label>
-      <select id="issuerSelect" class="form__select">
-        <option value="">Selecione</option>
-      </select>
-    </div>
-
-    <div>
-      <label for="installmentsSelect" class="form__label">Número de Parcelas</label>
-      <select id="installmentsSelect" class="form__select">
-        <option value="">Selecione</option>
-      </select>
-    </div>
-    
-  </fieldset>
-  
-
-  <fieldset class="form__fieldset">
-    <legend class="form__legend">Dados do Cartão</legend>
-  
-    <div class="form__group">
-      <label for="cardholderName" class="form__label">Nome Titular Cartão:</label>
-      <input type="text" class="form__input" id="cardholderName" />
-    </div>
-
-    <div class="form__group">
-      <label for="cardholderEmail" class="form__label">Email Titular Cartão:</label>
-      <input type="text" class="form__input" id="cardholderEmail" />
-    </div>
-
-    <div class="form__group">
-      <label for="cardNumber" class="form__label">Número do Cartão:</label>
-      <div class="form__input" id="cardNumber"></div>
-    </div>
-    
-    <div class="form__group">
-      <label for="expirationDate" class="form__label">Data de Vencimento:</label>
-      <div class="form__input" id="expirationDate"></div>
-    </div>
-    
-    <div class="form__group">
-      <label for="securityCode" class="form__label">Código de Segurança:</label>
-      <div class="form__input" id="securityCode"></div>
-    </div>
-  </fieldset>
-    
-  <button type="submit" class="form__button">Finalizar Compra</button>
-</form>

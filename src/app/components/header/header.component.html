@@ -1,19 +1,20 @@
 <header class="header">
     <div class="header__logo-container">
         <div class="header__logo">
-            <img (click)="navigateTo('', false)" src="assets/images/logo-cocada.png" alt="Logo" class="header__logo-image">
+            <img (click)="navigateTo('')" src="assets/images/header_bws_logo.png" alt="Logo" class="header__logo-image">
+            <span (click)="navigateTo('')" class="header__logo-txt">Sua Loja Virtual</span>
         </div>
     </div>
     
     <nav class="header__categories">
         <ul>
           <li *ngFor="let category of categories" class="header__category">
-            <a (click)="navigateTo(category.route, false)" class="header__category-link">
+            <a (click)="navigateTo(category.route)" class="header__category-link">
               {{ category.name }}
             </a>
             <ul *ngIf="category.subcategories" class="header__subcategory-list">
               <li *ngFor="let sub of category.subcategories" class="header__subcategory-item">
-                <a (click)="navigateTo(sub.route, false)" class="header__subcategory-link">
+                <a (click)="navigateTo(sub.route)" class="header__subcategory-link">
                   {{ sub.name }}
                 </a>
               </li>
@@ -30,11 +31,11 @@
                 type="text"
                 placeholder="Buscar produtos..."
                 [(ngModel)]="searchQuery"
-                (input)="filterNoticias()"
+                (input)="filterProdutos()"
             />
-            <ul *ngIf="filteredNoticias.length > 0" class="header__dropdown">
-                <li *ngFor="let noticia of filteredNoticias" class="header__dropdown-item" (click)="navigateTo(null,null)">
-                {{ noticia.headline }}
+            <ul *ngIf="filteredProdutos.length > 0" class="header__dropdown">
+                <li *ngFor="let produto of filteredProdutos" class="header__dropdown-item" (click)="navigateToProduto(produto.id)">
+                {{ produto.nome }}
                 </li>
             </ul>
             <mat-icon (click)="focusOnSearch()">search</mat-icon>
@@ -42,7 +43,7 @@
             <span class="cart-badge" *ngIf="cartQuantity > 0">{{ cartQuantity }}</span>
 
             <div class="header__social-icons">
-              <a href="https://www.instagram.com/cocadinhadobahia" target="_blank" class="fa-brands fa-instagram"></a>
+              <a href="https://www.instagram.com/bossawebsolutions/" target="_blank" class="fa-brands fa-instagram"></a>
             </div>
         </div>
     </div>

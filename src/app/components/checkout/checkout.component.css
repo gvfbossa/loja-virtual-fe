@@ -1,0 +1,194 @@
+.checkout {
+    min-height: 80vh;
+}
+
+h2 {
+  margin-top: 14rem;
+  text-align: center;
+  color: #003d7b;
+}
+
+.checkout__form {
+  max-width: 30%;
+  background-color: #fff;
+  padding: 2rem;
+  border: 1px solid #003d7b;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+}
+
+.checkout__fieldset {
+  border: 1px solid #003d7b;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: rgb(217, 217, 217);
+}
+
+.checkout__legend {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #012448;
+  margin-bottom: 1rem;
+}
+
+/* Novo Grid para os campos do formulário */
+.checkout__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Duas colunas iguais */
+  grid-gap: 1rem; /* Espaçamento entre as células */
+}
+
+/* Para campos que devem ocupar toda a largura */
+.checkout__full-width {
+  grid-column: span 2; /* Esses campos vão ocupar as duas colunas */
+}
+
+/* As regras para o layout das células da grid */
+.checkout__group {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.checkout__label {
+  font-size: 1rem;
+  color: #003d7b;
+}
+
+.checkout__select,
+.checkout__input {
+  font-size: 1.2rem;
+  max-width: 16rem;
+  height: 28px;
+  border: 1px solid #003d7b;
+  border-radius: 3px;
+  background-color: white;
+}
+
+.checkout__select {
+  height: 32px;
+}
+
+.checkout__input--num {
+  max-width: 3rem;
+}
+
+.checkout__input--full {
+  max-width: 100%;
+}
+
+.checkout__button {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  background: #012448;
+  color: white;
+  font-weight: bold;
+}
+
+.checkout__button:hover {
+  opacity: 0.9;
+}
+
+.checkout__qrcode {
+  display: flex;
+  margin: 0px auto;
+}
+
+@media (max-width: 768px) {
+  .checkout__form {
+    width: 90%;
+  }
+
+  .checkout__grid {
+    grid-template-columns: 1fr; /* Para dispositivos móveis, um campo por linha */
+  }
+}
+
+.checkout__endereco {
+  background-color: rgb(209, 208, 208);
+}
+
+.checkout__alert {
+  font-size: 1.2rem;
+  color: #003d7b;
+  margin: 1rem 0; /* Adiciona margem acima e abaixo do alerta */
+  text-align: center; /* Centraliza o texto do alerta */
+  justify-content: center;
+}
+
+.checkout__cart-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.checkout__cart-item__info {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.checkout__cart-item__name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #012448;
+}
+
+.checkout__cart-item__quantity {
+  font-size: 1rem;
+  color: #003d7b;
+}
+
+.checkout__cart-summary {
+  margin-top: 0rem;
+  padding-top: 0rem;
+  border-top: 1px solid #f2f2f2;
+}
+
+.checkout__cart-summary p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #003d7b;
+}
+
+.checkout__cart-summary-preco {
+  color: black;
+}
+
+.checkout__hidden-info {
+  display: none;
+}
+
+.checkout__cart-item {
+  display: flex;
+  align-items: center; /* Alinha na mesma linha */
+  border-bottom: 1px solid #d8d8d8;
+  font-size: 1rem;
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 1rem;
+}
+
+.checkout__cart-item__info {
+  display: flex;
+}
+
+.checkout__cart-item__name {
+  font-weight: bold;
+  color: #012448;
+}
+
+.checkout__cart-item:last-child {
+  border-bottom: none;
+}

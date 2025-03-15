@@ -29,7 +29,6 @@ export class HomeComponent {
 
   onSubmit() {
 
-    console.log('ta chamando essa porra aqui??????????')
     const description = (document.getElementById('description') as HTMLElement).innerText;
     const author = (document.getElementById('author') as HTMLElement).innerText;
     const pages = parseInt((document.getElementById('pages') as HTMLElement).innerText, 10);
@@ -43,9 +42,6 @@ export class HomeComponent {
       quantity: this.quantity
     };
   
-    console.log('Navigating to cart with product:', productDetails);
-  
-    // Navegar passando o produto pelo state
     this.router.navigate(['/cart'], { state: { product: productDetails } });
   }
   

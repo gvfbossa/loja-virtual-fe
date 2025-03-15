@@ -1,6 +1,6 @@
 .carousel {
   position: relative;
-  top: 4rem;
+  top: 2rem;
   width: 100%;
   max-width: 900px;
   margin: 60px auto;
@@ -10,9 +10,13 @@
   border-radius: 12px;
 }
 
+.carousel:hover {
+  cursor: pointer;
+}
+
 h2 {
   text-align: center;
-  color: #441612;
+  color: #012448;
   font-size: 2.5rem;
 }
 
@@ -33,7 +37,7 @@ h2 {
 
 .carousel__btn {
   position: absolute;
-  top: 50%;
+  top: 58%;
   transform: translateY(-50%);
   background-color: rgba(0, 0, 0, 0.6);
   color: #fff;

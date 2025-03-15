@@ -9,7 +9,7 @@
   }
   
   .product-card {
-    background: #F3E2B8;
+    background: rgb(217, 217, 217);
     border-radius: 10px;
     padding: 15px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -33,19 +33,19 @@
     font-size: 1.4rem;
     font-weight: bold;
     margin: 10px 0;
-    color: #441612;
+    color: #012448;
   }
   
   .product-card__description {
     font-size: 1rem;
-    color: #872B24;
+    color: #003d7b;
     margin-bottom: 10px;
   }
   
   .product-card__price {
     font-size: 1.1rem;
     font-weight: bold;
-    color: #441612;
+    color: #012448;
     margin-bottom: 10px;
   }
   
@@ -67,12 +67,12 @@
   
   .btn--view {
     background: white;
-    color: rgb(196, 50, 50);
+    color: #003d7b;
     font-weight: bold;
   }
   
   .btn--buy {
-    background: rgb(196, 50, 50);
+    background: #012448;
     color: white;
     font-weight: bold;
   }

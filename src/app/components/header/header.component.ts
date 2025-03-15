@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common'
 import { Router } from '@angular/router'
 import { MatIconModule } from '@angular/material/icon';
 import { CartService } from '../../services/cart.service';
+import { ProdutosService } from '../../services/produtos.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +13,8 @@ import { CartService } from '../../services/cart.service';
   imports: [
     FormsModule,
     CommonModule,
-    MatIconModule
+    MatIconModule,
+    RouterModule
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
@@ -20,15 +23,15 @@ export class HeaderComponent implements OnInit {
 
   cartQuantity: number = 0;
 
-  constructor(private router: Router, private cartService: CartService) {}
+  constructor(private router: Router, private cartService: CartService, private produtosService: ProdutosService) {}
 
   isMenuOpen = false
 
   currentDateTime: string = ''
 
   searchQuery: string = ''
-  filteredNoticias: any[] = []
-  noticias: any[] = []
+  filteredProdutos: any[] = []
+  produtos: any[] = []
 
   categories: { 
     name: string; 
@@ -36,24 +39,24 @@ export class HeaderComponent implements OnInit {
     subcategories?: { name: string; route: string }[] 
   }[] = [
     { 
-      name: 'COCADAS DE CORTE', 
-      route: 'corte', 
+      name: 'SITES', 
+      route: 'site', 
       subcategories: [
-        { name: 'Tradicional', route: 'noticia-categoria/geral' },
-        { name: 'Prestígio', route: 'noticia-categoria/politica' },
-        { name: 'Doce de Leite', route: 'noticia-categoria/politica' },
+        { name: 'Pessoal', route: 'categoria/site/pessoal' },
+        { name: 'Empresarial', route: 'categoria/site/empresa' },
+        { name: 'Landing Page', route: 'categoria/site/landing-page' },
       ]
     },
     {
-      name: 'COCADAS CREMOSAS',
-      route: 'cremosa'
+      name: 'SISTEMAS', 
+      route: 'categoria/sistema'
     },
-    { name: 'COCADAS DE FORNO', 
-      route: 'noticia-categoria/agenda',
+    { name: 'APPS', 
+      route: 'categoria/app',
       subcategories: [
-        { name: '100g', route: '' },
-        { name: '500g', route: '' },
-        { name: '1000g', route: '' }
+        { name: 'Pizzaria', route: 'categoria/app/pizzaria' },
+        { name: 'Entregas', route: 'categoria/app/entregas' },
+        { name: 'Conectividade', route: 'categoria/app/conectividade' }
       ]
     },
     
@@ -63,53 +66,39 @@ export class HeaderComponent implements OnInit {
     this.cartService.cartQuantity$.subscribe(quantity => {
       this.cartQuantity = quantity; 
     });
+    this.produtos = this.produtosService.getProdutos()
   }
 
   navigateToCart() {
-    console.log('cartItems ', this.cartService.getCartItems())
     this.router.navigate(['/cart'], { state: { cartItems: this.cartService.getCartItems() } });
   }
 
-  navigateTo(p: any, y: any) {
-    this.router.navigate(['']);
+  navigateTo(route: string) {
+    if (route)
+      this.router.navigate([route])
+    else 
+      this.router.navigate([''])
   }
 
-  filterNoticias() {
+  navigateToProduto(id: any) {
+    this.router.navigate(['produto/', id]);
+    this.filteredProdutos = []
+    this.searchQuery = ''
+  }
+
+  filterProdutos() {
     const searchTerm = this.searchQuery.trim().toLowerCase()
     if (searchTerm.length > 2) {
-      this.filteredNoticias = this.noticias.filter((noticia) =>
-        noticia.headline.toLowerCase().includes(searchTerm)
+      this.filteredProdutos = this.produtos.filter((produto) =>
+        produto.nome.toLowerCase().includes(searchTerm)
       )
     } else {
-      this.filteredNoticias = []
+      this.filteredProdutos = []
     }
   }
 
   focusOnSearch() {
     document.getElementById('search-box')?.focus()
-  }    
-
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen
-  }
-
-  updateDateTime() {
-    const now = new Date()
-    this.currentDateTime = this.capitalizeWords(
-      now.toLocaleString('pt-BR', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      })
-    )
-  }
-  
-  capitalizeWords(input: string): string {
-    return input
-      .split(' ')
-      .map(word => word != 'de' ? word.charAt(0).toUpperCase() + word.slice(1) : word.charAt(0) + word.slice(1))
-      .join(' ')
   }
 
 }

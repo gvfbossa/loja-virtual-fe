@@ -1,3 +1,5 @@
+
+
 /* Estilos Gerais */
 body {
     font-family: Arial, sans-serif;
@@ -15,4 +17,18 @@ app-root {
 router-outlet {
     flex: 1;
     display: block;
+}
+
+.snackbar-info {
+    background-color: #003d7b;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.snackbar-error {
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
 }

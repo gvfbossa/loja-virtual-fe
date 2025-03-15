@@ -1,0 +1,201 @@
+<div class="checkout">
+    <h2 class="checkout__title">Checkout</h2>
+
+    <div *ngIf="cartItems.length <= 0" class="checkout__alert">
+        Nenhum produto selecionado. Por favor, volte e escolha um produto.
+    </div>
+
+    <form id="checkout-form" class="checkout__form" (ngSubmit)="submitForm($event)" #checkoutForm="ngForm" *ngIf="cartItems.length > 0">
+        
+        <fieldset class="checkout__fieldset checkout__fieldset-resumo">
+            <legend class="checkout__legend">Resumo da Compra</legend>
+            
+            <!-- Lista de Produtos -->
+            <div *ngFor="let item of cartItems; let i = index" class="checkout__cart-item">
+              <div class="checkout__cart-item__info">
+                <h4 class="checkout__cart-item__name">{{ item.nome }} - <span class="checkout__cart-item__quantity">Quantidade: {{ item.quantity }}</span></h4>
+              </div>
+            </div>
+          
+            <!-- Total -->
+            <div class="checkout__cart-summary">
+              <p><strong>Total com frete: </strong> <span class="checkout__cart-summary-preco" id="product-price">R$ {{ totalPrice.toString().replace('.', ',') }}</span></p>
+            </div>
+        </fieldset>
+
+        <!-- Formulário de Pagamento -->
+        <fieldset class="checkout__fieldset">
+            <legend class="checkout__legend">Dados Pessoais</legend>
+    
+            <div class="checkout__grid">
+                <div class="checkout__group">
+                    <label for="identificationType" class="checkout__label">Documento:</label>
+                    <select id="docType" class="checkout__select" required>
+                    </select>
+                </div>
+                
+                <div class="checkout__group">
+                    <label for="identificationNumber" class="checkout__label">Número:</label>
+                    <input type="text" id="identificationNumber" class="checkout__input" required />
+                </div>
+    
+                <!-- Email em uma linha única -->
+                <div class="checkout__group checkout__full-width">
+                    <label for="cardholderEmail" class="checkout__label">Email:</label>
+                    <input type="text" id="cardholderEmail" class="checkout__input checkout__input--full" />
+                </div>
+    
+                <div class="checkout__group checkout__full-width">
+                    <label for="endereco" class="checkout__label">Endereço:</label>
+                    <input type="text" id="endereco" class="checkout__input checkout__input--full checkout__endereco" [(ngModel)]="endereco" name="endereco" readonly />
+                </div>
+                <div class="checkout__group">
+                    <label for="cardholderEmail" class="checkout__label">Número:</label>
+                    <input type="text" id="numeroEndereco" class="checkout__input" required />
+                </div>
+                
+                <div class="checkout__group">
+                    <label for="cardholderEmail" class="checkout__label">Complemento:</label>
+                    <input type="text" id="complementoEndereco" class="checkout__input" />
+                </div>
+            </div>
+        </fieldset>    
+
+        <fieldset *ngIf="selectedPaymentMethod === 'credito'" class="checkout__fieldset">
+            <legend class="checkout__legend">Dados do Cartão</legend>
+        
+            <div class="checkout__grid">
+                <div class="checkout__group checkout__full-width">
+                    <label for="cardholderName" class="checkout__label">Nome Titular Cartão:</label>
+                    <input type="text" class="checkout__input checkout__input--full" id="cardholderName" />
+                </div>
+
+                <div class="checkout__group checkout__full-width">
+                    <label for="cardNumber" class="checkout__label">Número do Cartão:</label>
+                    <div class="checkout__input checkout__input--full" id="cardNumber"></div>
+                </div>
+                
+                <div class="checkout__group">
+                    <label for="expirationDate" class="checkout__label">Data de Vencimento:</label>
+                    <div class="checkout__input" id="expirationDate"></div>
+                </div>
+                <div class="checkout__group">
+                    <label for="securityCode" class="checkout__label">Código de Segurança:</label>
+                    <div class="checkout__input" id="securityCode"></div>
+                </div>
+
+                <div class="checkout__group checkout__full-width">
+                    <label for="installmentsSelect" class="checkout__label">Número de Parcelas</label>
+                    <select id="installmentsSelect" class="checkout__select checkout__input--full">
+                    </select>
+                </div>
+             </div>
+        </fieldset>
+
+        <fieldset *ngIf="selectedPaymentMethod === 'debito'" class="checkout__fieldset">
+            <legend class="checkout__legend">Dados do Cartão de Débito</legend>
+            
+            <div class="checkout__grid">
+              <div class="checkout__group checkout__full-width">
+                <label for="cardholderName" class="checkout__label">Nome Titular Cartão:</label>
+                <input type="text" class="checkout__input checkout__input--full" id="cardholderName" />
+              </div>
+          
+              <div class="checkout__group checkout__full-width">
+                <label for="cardNumber" class="checkout__label">Número do Cartão:</label>
+                <div class="checkout__input checkout__input--full" id="cardNumber"></div>
+              </div>
+              
+              <div class="checkout__group">
+                <label for="expirationDate" class="checkout__label">Data de Vencimento:</label>
+                <div class="checkout__input" id="expirationDate"></div>
+              </div>
+              <div class="checkout__group">
+                <label for="securityCode" class="checkout__label">Código de Segurança:</label>
+                <div class="checkout__input" id="securityCode"></div>
+              </div>
+            </div>
+        </fieldset>          
+
+        <fieldset *ngIf="selectedPaymentMethod === 'pix'" class="checkout__fieldset">
+            <legend class="checkout__legend">Pagamento via Pix</legend>
+
+            <div class="checkout__grid">
+                <div class="checkout__group checkout__full-width">
+                    <label for="nomeCompleto" class="checkout__label">Nome Completo:</label>
+                    <input id="nomeCompleto" type="text" class="checkout__input checkout__input--full" required />
+                </div>
+                
+                <div class="checkout__group checkout__full-width">
+                    <button (click)="gerarPix()" class="checkout__button">Gerar QR Code Pix</button>
+                    <span *ngIf="isLoadingPagto">
+                        <app-spinner></app-spinner>
+                    </span>
+                </div>
+
+                <div *ngIf="qrCodePix" class="checkout__group checkout__full-width">
+                    <p><strong>Escaneie ou copie o QR Code para pagar:</strong></p>
+                    <qrcode class="checkout__qrcode" [qrdata]="qrCodePix" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>        
+                </div>
+
+                <div *ngIf="qrCodePix" class="checkout__group checkout__full-width">
+                    <input type="text" class="checkout__input checkout__input--full" [value]="copiaECola" readonly>
+                </div>
+
+                <div *ngIf="qrCodePix" class="checkout__group checkout__full-width">
+                    <button (click)="copiarCodigoPix()" class="checkout__button">Copiar Código</button>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset *ngIf="selectedPaymentMethod === 'boleto'" class="checkout__fieldset">
+            <legend class="checkout__legend">Pagamento via Boleto</legend>
+        
+            <div class="checkout__grid">
+                <div class="checkout__group checkout__full-width">
+                    <label for="nomeCompletoBoleto" class="checkout__label">Nome Completo:</label>
+                    <input id="nomeCompletoBoleto" type="text" class="checkout__input checkout__input--full" required />
+                </div>
+        
+                <div class="checkout__group checkout__full-width">
+                    <button (click)="gerarBoleto()" class="checkout__button">Gerar Boleto</button>
+                    <span *ngIf="isLoadingPagto">
+                        <app-spinner></app-spinner>
+                    </span>
+                </div>
+        
+                <div *ngIf="boletoGerado" class="checkout__group checkout__full-width">
+                    <p><strong>Seu boleto foi gerado:</strong></p>
+                    <button (click)="baixarBoleto()" class="checkout__button">Baixar Boleto</button>
+                </div>
+            </div>
+        </fieldset>        
+                    
+        <fieldset class="checkout__fieldset checkout__hidden-info">
+            <legend class="checkout__legend">Método de Pagamento</legend>
+            <div class="checkout__group">
+                <label for="paymentMethodSelect" class="checkout__label">Método de Pagamento:</label>
+                <select id="paymentMethodSelect" class="checkout__select" required>
+                    <option value="">Selecione</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="issuerSelect" class="checkout__label">Banco Emissor</label>
+                <select id="issuerSelect" class="checkout__select">
+                    <option value="">Selecione</option>
+                </select>
+            </div>
+        </fieldset>
+            
+        <button *ngIf="selectedPaymentMethod === 'credito' || selectedPaymentMethod === 'debito'" type="submit" class="checkout__button">
+            <span>Comprar</span>
+            <span *ngIf="isLoadingPagto">
+                <app-spinner></app-spinner>
+            </span>
+        </button>
+    </form>
+    <span *ngIf="loadInfo">
+        <app-spinner></app-spinner>
+    </span>
+</div>

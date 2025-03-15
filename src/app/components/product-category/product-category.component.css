@@ -1,0 +1,114 @@
+.product__container {
+  min-height: 80vh;
+}
+
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 400px;
+    margin: 0 auto;
+    margin-top: 10rem;
+    margin-bottom: 4rem;
+  }
+  
+  .product-card {
+    background: rgb(217, 217, 217);
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center; 
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    cursor: pointer;
+  }
+  
+  .product-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  .product-card__image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .product-card__name {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #012448;
+  }
+  
+  .product-card__description {
+    font-size: 1rem;
+    color: #003d7b;
+    margin-bottom: 10px;
+  }
+  
+  .product-card__price {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #012448;
+    margin-bottom: 10px;
+  }
+  
+  .product-card__actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .btn {
+    flex: 1;
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+  }
+  
+  .btn--view {
+    background: white;
+    color: #012448;
+    font-weight: bold;
+  }
+  
+  .btn--buy {
+    background: #012448;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .btn:hover {
+    opacity: 0.9;
+  }
+  
+  /* Responsivo */
+  @media (max-width: 768px) {
+    .product-list {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+  }
+  
+  .empty-message {
+    position: absolute; /* Ou fixed se quiser que continue fixa ao rolar a página */
+    top: 20px; /* Distância do topo */
+    left: 50%;
+    transform: translateX(-50%); /* Centraliza horizontalmente */
+    text-align: center;
+    font-size: 1.5rem;
+    color: #555;
+    padding: 20px;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    max-width: 400px;
+    width: 90%; /* Garante boa responsividade */
+    margin-top: 12rem;
+  }
+  
+  
+  

@@ -1,15 +1,15 @@
     .footer {
         bottom: 0;
         display: flex;
-        background-color: #F3E2B8;
+        background-color: rgb(217, 217, 217);
         width: 100%;
         font-size: 1rem;
-        color: #441612;
+        color: #012448;
         box-shadow: 0 0.4rem 0.6rem rgba(0, 0, 0, 0.4);
     }
 
     .footer__container {
-        display: flex;
+        display: flex; 
         justify-content: flex-end;
         width: 100%;
         align-items: center;
@@ -25,7 +25,12 @@
 
     .footer__bws a {
         text-decoration: none;
-        color: #872B24;
+        color: black;
+    }
+
+    .footer__bws a:hover {
+        text-decoration: none;
+        color: rgb(66, 66, 66);
     }
 
     @media (max-width: 768px) {
