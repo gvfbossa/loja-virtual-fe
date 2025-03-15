@@ -89,16 +89,6 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   gerarBoleto(): void {
     this.isLoadingPagto = true;
 
-    if (this.mock) {
-      this.isLoadingPagto = true;
-      this.linkBoleto = this.generateFakeBoleto()
-      this.boletoGerado = true
-      setTimeout(() => {
-        this.isLoadingPagto = false;
-      }, 3000);
-      return;
-    }
-
     const identificationNumber = (document.getElementById('identificationNumber') as HTMLInputElement).value;
     const email = (document.getElementById('cardholderEmail') as HTMLInputElement).value;
     const nomeCompleto = (document.getElementById('nomeCompletoBoleto') as HTMLInputElement).value;
@@ -155,6 +145,16 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       cidade: cidade,
       estado: uf,
     };
+
+    if (this.mock) {
+      this.isLoadingPagto = true;
+      this.linkBoleto = this.generateFakeBoleto()
+      this.boletoGerado = true
+      setTimeout(() => {
+        this.isLoadingPagto = false;
+      }, 3000);
+      return;
+    }
 
     // Enviar a requisição POST para o endpoint do back-end
     this.http.post('https://localhost:8443/api/pagamento/boleto', boletoPaymentDTO)

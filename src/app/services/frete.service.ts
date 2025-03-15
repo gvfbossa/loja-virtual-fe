@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { delay, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +9,31 @@ export class FreteService {
   
   constructor(private http: HttpClient) { }
 
+  mock = true
+
   calcularFrete(cepOrigem: string, cepDestino: string, cartItems: any[]): Observable<any> {
-    const url = 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate';
+    if (this.mock) {
+      return of([
+        {
+          name: "SEDEX",
+          price: 15.90,
+          company: {
+            name: "Correios",
+            picture: "assets/images/correios-logo.png"
+          }
+        },
+        {
+          name: "PAC",
+          price: 10.50,
+          company: {
+            name: "Correios",
+            picture: "assets/images/correios-logo.png"
+          }
+        }
+      ]).pipe(delay(1000));
+    }
+    
+    const url = '/melhorenvio-api/api/v2/me/shipment/calculate';
     const headers = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json',
