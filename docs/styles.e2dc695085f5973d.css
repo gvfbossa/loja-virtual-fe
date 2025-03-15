@@ -1,0 +1,1 @@
+body{font-family:Arial,sans-serif;margin:0;padding:0;color:#333}app-root{display:flex;flex-direction:column;min-height:100vh}router-outlet{flex:1;display:block}.snackbar-info{background-color:#003d7b;color:#fff;border-radius:5px;text-align:center}.snackbar-error{background-color:red;color:#fff;border-radius:5px;text-align:center}
